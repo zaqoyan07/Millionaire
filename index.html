@@ -70,7 +70,7 @@
             Կարգավորումներ
           </button>
           <button class="login-button" onclick="Page('AuthorGame')">
-            Խաղի Հեղինակ
+            Խաղի Հեղինակներ
           </button>
           <input
             class="login-button"
@@ -91,9 +91,11 @@
                 class="help quit"
                 title="Դուրս Գալ"
                 onclick="QuitModal()"
+                id="quit-modal"
               ></button>
               <button
                 class="help take"
+                id="take-modal"
                 title="Վերցնել Գումարը"
                 onclick="TakeModal()"
               ></button>
@@ -187,7 +189,7 @@
         <!-- Take Modal -->
         <div id="TakeModal">
           <div class="main">
-            <p>Դուք որոշել եք դաթարեցնե՞լ խաղը ու վերցնել գումարը</p>
+            <p id="take-money">Դուք որոշել եք դաթարեցնե՞լ խաղը ու վերցնել գումարը</p>
           </div>
           <div class="footer">
             <div class="yes" onclick="AnswerTakeModal('yes')">Այո</div>
@@ -325,7 +327,7 @@
     <section id="AuthorGame">
       <main>
         <div class="header">
-          <h3>Խաղի Հեղինակ</h3>
+          <h3>Խաղի Հեղինակներ</h3>
         </div>
         <div class="main">
           <div class="header-images">
@@ -337,7 +339,6 @@
               />
               <p class="author-name">Արժանիկ Զաքոյան</p>
               <a
-                href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSBpgRPjnwPFlJcNwjXkDJBbfblsrzcfVCZFVGqBqLmDqDwpCrxLxtJCZcZvmfndnqcwvMQb"
                 class="author-mail"
                 target="_blank"
               >
@@ -353,7 +354,6 @@
               />
               <p class="author-name">Կարեն Մուրադյան</p>
               <a
-                href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSBpgRPjnwPFlJcNwjXkDJBbfblsrzcfVCZFVGqBqLmDqDwpCrxLxtJCZcZvmfndnqcwvMQb"
                 class="author-mail"
                 target="_blank"
               >

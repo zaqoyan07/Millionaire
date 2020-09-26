@@ -1,6 +1,30 @@
 window.addEventListener("load", function () {
 	const loader = document.querySelector(".loader");
 	loader.className += 'hidden';
+	for (let i = 0; i < FinishQuestions.length; i++) {
+		const element = FinishQuestions[i];
+		element.choosed = false;
+	}
+	for (let i = 0; i < VeryHardQuestions.length; i++) {
+		const element = VeryHardQuestions[i];
+		element.choosed = false;
+	}
+	for (let i = 0; i < HardQuestions.length; i++) {
+		const element = HardQuestions[i];
+		element.choosed = false;
+	}
+	for (let i = 0; i < NrmalQuestions.length; i++) {
+		const element = NrmalQuestions[i];
+		element.choosed = false;
+	}
+	for (let i = 0; i < EassyQuestions.length; i++) {
+		const element = EassyQuestions[i];
+		element.choosed = false;
+	}
+	for (let i = 0; i < VeryEassyQuestions.length; i++) {
+		const element = VeryEassyQuestions[i];
+		element.choosed = false;
+	}
 });
 
 // Music
@@ -283,6 +307,12 @@ function NextQuestion() {
 	document.getElementById('option2').onclick = () => AnswerQuestion(2)
 	document.getElementById('option3').onclick = () => AnswerQuestion(3)
 	document.getElementById('option4').onclick = () => AnswerQuestion(4)
+	document.getElementById('call').onclick = () => HelpCall()
+	document.getElementById('hall').onclick = () => HelpHall()
+	document.getElementById('fifty-fifty').onclick = () => FiftyFifty()
+	document.getElementById('change').onclick = () => ChangeHelp()
+	document.getElementById('quit-modal').onclick = () => QuitModal()
+	document.getElementById('take-modal').onclick = () => TakeModal()
 }
 function AnswerQuestion(option) {
 	let QuestionNow = OngoingQuestions[OngoingQuestionsIndex];
@@ -291,6 +321,12 @@ function AnswerQuestion(option) {
 	document.getElementById('option2').onclick = null
 	document.getElementById('option3').onclick = null
 	document.getElementById('option4').onclick = null
+	document.getElementById('call').onclick = null
+	document.getElementById('hall').onclick = null
+	document.getElementById('fifty-fifty').onclick = null
+	document.getElementById('change').onclick = null
+	document.getElementById('quit-modal').onclick = null
+	document.getElementById('take-modal').onclick = null
 	document.getElementById("option" + option).classList.add('option' + option + '-hover');
 	function OptionHover() {
 		document.getElementById("option" + option).classList.remove('option' + option + '-hover')
@@ -361,7 +397,7 @@ function ChangeQuestion() {
 	} else if (OngoingQuestionsIndex === 2) {
 		OngoingQuestions = EassyQuestions;
 		shuffle(EassyQuestions);
-	}else if (OngoingQuestionsIndex === 0){
+	} else if (OngoingQuestionsIndex === 0) {
 		document.getElementById('change').style.display = 'none'
 	}
 	NextQuestion();
@@ -671,6 +707,8 @@ function Page(value) {
 		document.getElementById('fifty-fifty').onclick = FiftyFifty
 		document.getElementById("change").classList.remove('Xchange');
 		document.getElementById('change').onclick = ChangeHelp
+		document.getElementById('quit-modal').onclick = () => QuitModal()
+		document.getElementById('take-modal').onclick = () => TakeModal()
 		document.getElementById("option1").classList.remove('option1-false');
 		document.getElementById("option2").classList.remove('option2-false');
 		document.getElementById("option3").classList.remove('option3-false');
@@ -679,6 +717,30 @@ function Page(value) {
 		document.getElementById("option2").classList.remove('option2-true');
 		document.getElementById("option3").classList.remove('option3-true');
 		document.getElementById("option4").classList.remove('option4-true');
+		for (let i = 0; i < FinishQuestions.length; i++) {
+			const element = FinishQuestions[i];
+			element.choosed = false;
+		}
+		for (let i = 0; i < VeryHardQuestions.length; i++) {
+			const element = VeryHardQuestions[i];
+			element.choosed = false;
+		}
+		for (let i = 0; i < HardQuestions.length; i++) {
+			const element = HardQuestions[i];
+			element.choosed = false;
+		}
+		for (let i = 0; i < NrmalQuestions.length; i++) {
+			const element = NrmalQuestions[i];
+			element.choosed = false;
+		}
+		for (let i = 0; i < EassyQuestions.length; i++) {
+			const element = EassyQuestions[i];
+			element.choosed = false;
+		}
+		for (let i = 0; i < VeryEassyQuestions.length; i++) {
+			const element = VeryEassyQuestions[i];
+			element.choosed = false;
+		}
 		OngoingQuestionsIndex = 0;
 		TakeMoneyIndex = 0
 		MoneyIndex = 0
@@ -757,6 +819,7 @@ function AnswerQuitModal(value) {
 function TakeModal() {
 	document.getElementById('TakeModal').style.display = "block";
 	document.getElementById("ResultText").innerText = "Հարգելի " + localStorage.getItem('name', name) + " " + localStorage.getItem('surname', surname) + " շնորհավորում ենք Դուք կարողացաք վաստակել " + Takemoney + "դրամ";
+	document.getElementById('take-money').innerText = "Դուք որոշել եք դաթարեցնե՞լ խաղը ու վերցնել գումարը, որը կազմում է " + Takemoney + 'դրամ'
 }
 function AnswerTakeModal(value) {
 	if (value === 'yes') {
@@ -1490,27 +1553,3 @@ let VeryEassyQuestions = [
 		trueOption: 4
 	}
 ];
-for (let i = 0; i < FinishQuestions.length; i++) {
-	const element = FinishQuestions[i];
-	element.choosed = false;
-}
-for (let i = 0; i < VeryHardQuestions.length; i++) {
-	const element = VeryHardQuestions[i];
-	element.choosed = false;
-}
-for (let i = 0; i < HardQuestions.length; i++) {
-	const element = HardQuestions[i];
-	element.choosed = false;
-}
-for (let i = 0; i < NrmalQuestions.length; i++) {
-	const element = NrmalQuestions[i];
-	element.choosed = false;
-}
-for (let i = 0; i < EassyQuestions.length; i++) {
-	const element = EassyQuestions[i];
-	element.choosed = false;
-}
-for (let i = 0; i < VeryEassyQuestions.length; i++) {
-	const element = VeryEassyQuestions[i];
-	element.choosed = false;
-}
