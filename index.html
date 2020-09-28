@@ -317,6 +317,15 @@
           <div id="Mute" onclick="VolumeMute(),Music('mute')">
             <i class="fas fa-volume-mute"></i>
           </div>
+
+          <table id="quiz-stats">
+            <tr>
+              <th>Անուն</th>
+              <th>Ազգանուն</th>
+              <th>Գումար</th>
+              <th>Ամսաթիվ</th>
+            </tr>
+          </table>
         </div>
         <div class="footer">
           <button class="login-button" onclick="Quit()">Գլխավոր Ցանկ</button>
@@ -398,6 +407,9 @@
     </audio>
     <audio id="MusicFalse" autoplay>
       <source src="music/false.mp3" type="audio/mp3" />
+    </audio>
+    <audio id="helps" autoplay>
+      <source src="music/helps.mp3" type="audio/mp3" />
     </audio>
     <!-- Main JS -->
     <script src="js/main.js"></script>
