@@ -234,6 +234,7 @@ function Money() {
     money = index14
   }
 }
+
 //Take Money
 let TakeMoneyIndex = 0
 
@@ -253,6 +254,7 @@ let Takeindex11 = "500.000";
 let Takeindex12 = "1.000.000";
 let Takeindex13 = "2.000.000";
 let Takeindex14 = "3.000.000";
+let Takeindex15 = "5.000.000";
 
 function TakeMoney() {
   if (TakeMoneyIndex === 0) {
@@ -304,12 +306,20 @@ function NextQuestion() {
   console.log(OngoingQuestionsIndex);
   console.log('music', MusicIndex);
   var QuestionNow = OngoingQuestions[OngoingQuestionsIndex];
+  let question = OngoingQuestions.find(el => el.choosed == false)
+  question.choosed = true;
   QuestionNow.choosed = true;
-  Qustion.innerText = QuestionNow["question"];
-  Option1.innerText = QuestionNow["option1"];
-  Option2.innerText = QuestionNow["option2"];
-  Option3.innerText = QuestionNow["option3"];
-  Option4.innerText = QuestionNow["option4"];
+  Qustion.innerText = question["question"];
+  Option1.innerText = question["option1"];
+  Option2.innerText = question["option2"];
+  Option3.innerText = question["option3"];
+  Option4.innerText = question["option4"];
+  QuestionNow.question = question["question"];
+  QuestionNow.option1 = question["option1"];
+  QuestionNow.option2 = question["option2"];
+  QuestionNow.option3 = question["option3"];
+  QuestionNow.option4 = question["option4"];
+  QuestionNow.trueOption = question["trueOption"];
   document.getElementById('option1').onclick = () => AnswerQuestion(1)
   document.getElementById('option2').onclick = () => AnswerQuestion(2)
   document.getElementById('option3').onclick = () => AnswerQuestion(3)
@@ -407,7 +417,7 @@ function ChangeQuestion() {
     OngoingQuestions = EassyQuestions;
     shuffle(EassyQuestions);
   } else if (OngoingQuestionsIndex === 0) {
-    document.getElementById('change').style.display = 'none'
+    document.getElementById('change').style.display = 'block'
   }
   NextQuestion();
 }
@@ -427,16 +437,21 @@ function shuffle(arr) {
 // Change
 function ChangeHelp() {
   let QuestionNow = OngoingQuestions[OngoingQuestionsIndex];
-  shuffle(OngoingQuestions)
   document.getElementById('change').onclick = null
   document.getElementById("change").classList.add('Xchange');
   let question = OngoingQuestions.find(el => el.choosed == false)
   question.choosed = true;
+  QuestionNow.choosed = true;
   Qustion.innerText = question["question"];
   Option1.innerText = question["option1"];
   Option2.innerText = question["option2"];
   Option3.innerText = question["option3"];
   Option4.innerText = question["option4"];
+  QuestionNow.question = question["question"];
+  QuestionNow.option1 = question["option1"];
+  QuestionNow.option2 = question["option2"];
+  QuestionNow.option3 = question["option3"];
+  QuestionNow.option4 = question["option4"];
   QuestionNow.trueOption = question["trueOption"];
   document.getElementById("helps").play();
   document.getElementById("helps").currentTime = 0;
@@ -533,6 +548,7 @@ function HelpCall() {
 function AnswerHelpCall() {
   document.getElementById('HelpCall').style.display = "none";
 }
+
 // Hall
 function HelpHall() {
   let QuestionNow = OngoingQuestions[OngoingQuestionsIndex];
@@ -764,6 +780,9 @@ function Page(value) {
     OngoingQuestions = VeryEassyQuestions;
     shuffle(VeryEassyQuestions)
     ChangeQuestion();
+  } else if (value === 'Best') {
+    document.getElementById('Best').style.display = "block";
+    document.getElementById('Menu').style.display = "none";
   } else if (value === 'Settings') {
     document.getElementById('Settings').style.display = "block";
     document.getElementById('Menu').style.display = "none";
@@ -781,6 +800,7 @@ function Quit() {
   document.getElementById('NewGame').style.display = "none";
   document.getElementById('AboutGame').style.display = "none";
   document.getElementById('Settings').style.display = "none";
+  document.getElementById('Best').style.display = "none";
   document.getElementById('AuthorGame').style.display = "none";
   document.getElementById("Music1_5").pause();
   document.getElementById("Music6_10").pause();
@@ -848,11 +868,14 @@ function AnswerTakeModal(value) {
     document.getElementById("Music12_13").pause();
     document.getElementById("Music14").pause();
     document.getElementById("Music15").pause();
-    finalResult();
+    document.getElementById("p").innerHTML = '+'
+    document.getElementById("take-modal").onclick = null
+    finalResultTake();
   } else if (value === 'no') {
     document.getElementById('TakeModal').style.display = "none";
   }
 }
+
 // Result Modal
 function ResultModal() {
   document.getElementById('ResultModal').style.display = "block";
@@ -889,11 +912,111 @@ function WinResultModal() {
     document.getElementById("ResultText").innerText = "Հարգելի " + localStorage.getItem('name', name) + " " + localStorage.getItem('surname', surname) + " շնորհավորում ենք դուք Հաղթեցիք վաստակել " + index14 + "դրամ";
   }
 }
+
+// localStorage result
+
+let stats = [];
+let localStorageKey = "millionaire-result";
+seeResults()
+
+function finalResult() {
+  if (
+    MoneyIndex === 0 ||
+    MoneyIndex === 1 ||
+    MoneyIndex === 2 ||
+    MoneyIndex === 3 ||
+    MoneyIndex === 4
+  ) {
+    localmoney = '0'
+  } else if (
+    MoneyIndex === 5 ||
+    MoneyIndex === 6 ||
+    MoneyIndex === 7 ||
+    MoneyIndex === 8 ||
+    MoneyIndex === 9
+  ) {
+    localmoney = '8.000'
+  } else if (
+    MoneyIndex === 10 ||
+    MoneyIndex === 11 ||
+    MoneyIndex === 12 ||
+    MoneyIndex === 13 ||
+    MoneyIndex === 14
+  ) {
+    localmoney = '250.000'
+  } else if (MoneyIndex === 15) {
+    localmoney = '5.000.000'
+  }
+  let statObject = {
+    localName: localStorage.getItem('name'),
+    localSurname: localStorage.getItem('surname'),
+    localMoney: localmoney,
+    date: new Date()
+  };
+  console.log(statObject);
+  stats.push(statObject);
+  while (stats.length >= 10) {
+    stats.shift();
+  }
+  let statsSting = JSON.stringify(stats);
+  localStorage.setItem(localStorageKey, statsSting);
+
+  addString(statObject);
+}
+
+function finalResultTake() {
+  let statObject = {
+    localName: localStorage.getItem('name'),
+    localSurname: localStorage.getItem('surname'),
+    localMoney: Takemoney,
+    date: new Date()
+  };
+  console.log(statObject);
+  stats.push(statObject);
+  while (stats.length >= 10) {
+    stats.shift();
+  }
+  let statsSting = JSON.stringify(stats);
+  localStorage.setItem(localStorageKey, statsSting);
+
+  addString(statObject);
+}
+
+function seeResults() {
+  let statsSting = localStorage.getItem(localStorageKey);
+  stats = JSON.parse(statsSting) || [];
+
+  for (let i = 0; i < stats.length; i++) {
+    let statObject = stats[i];
+    addString(statObject);
+  }
+}
+
+function addString(info) {
+  let statsTable = document.getElementById("quiz-stats");
+
+  let stringTr = statsTable.insertRow(1);
+
+  nameTd = stringTr.insertCell(0);
+  nameTd.innerText = info["localName"];
+
+  surnameTd = stringTr.insertCell(1);
+  surnameTd.innerText = info["localSurname"];
+
+  moneyTd = stringTr.insertCell(2);
+  moneyTd.innerText = info["localMoney"];
+
+  let day = new Date(info["date"]);
+  let dateTd = stringTr.insertCell(3);
+  dateTd.innerText = day.toDateString() + " " + day.getHours() + ":" + day.getMinutes();
+}
+
+
 // Question
 let FinishQuestions = [
   {
     choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
+    question: "Քանի՞ ծովեր են ողողում Բալկանյան Թերակղզին:",
     option1: "6",
     option2: "3",
     option3: "5",
@@ -902,85 +1025,115 @@ let FinishQuestions = [
   },
   {
     choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
+    question: "Ի՞նչ անուն չի ընդունել Հռոմի ոչ մի պապ",
+    option1: "Վալենտին",
+    option2: "Գեորգի ",
+    option3: "Եվգենի",
+    option4: "Վիկտոր",
+    trueOption: 2
+  },
+  {
+    choosed: false,
+    question: "1718 թվականին ո՞ր ծովահենն է զոհվել ներկայիս Հյուսիսային Կարոլինայի ափերի մոտ ճակատամարտում:",
+    option1: "Կալիկո Ջեկ",
+    option2: "Բարթոլոմյու Ռոբերթս",
+    option3: "Բլեքբերդ ",
+    option4: "Կապիտան Քիդդ",
+    trueOption: 3
+  },
+  {
+    choosed: false,
+    question: "Ո՞ր քիմիական տարրի հայտնագործման պատվին են Ֆրանսիայում 19-րդ դարում հատել Ապոլոնի պատկերով մեդալ:",
+    option1: "Տիտան",
+    option2: "Ջրածին ",
+    option3: "Ռադիում",
+    option4: "Հելիում ",
+    trueOption: 4
+  },
+  {
+    choosed: false,
+    question: "Ավանդաբար ի՞նչ են անում երաժիշտները Հայդնի «Հրաժեշտի սիմֆոնիան» նվագելիս:",
+    option1: "Հանգցնում են մոմերը",
+    option2: "երգում են ",
+    option3: "Գլխարկ են հագնում",
+    option4: "Օդային համբույրներ են ուղարկում",
     trueOption: 1
   },
   {
     choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
-    trueOption: 1
+    question: "Ինչպե՞ս է կոչվում Երկրի մակերեւույթի ամենախորը կետը, որը գտնվում է Մարիանայի խոռոչի հատակին:",
+    option1: "Սև Բույն",
+    option2: "Չելլենջերի Անդունդը",
+    option3: "Ֆիլիպինյան ափսե",
+    option4: "Կերմադեկ",
+    trueOption: 2
   },
   {
     choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
-    trueOption: 1
+    question: "Ի՞նչ ֆիգուրներով են սկսվում քաղաքային սպորտի մրցումները:",
+    option1: "Ժամացույցի",
+    option2: "Հրետանային",
+    option3: "Ատրճանակ",
+    option4: "Մեքենայաընթեռնելի բույն",
+    trueOption: 3
   },
   {
     choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
-    trueOption: 1
+    question: "Ո՞վ է միակ բրիտանացի քաղաքական գործիչը, ով իր կարիերայի ինչ-որ պահի զբաղեցրել է բոլոր չորս «Մեծ Պետական Պաշտոնները»:",
+    option1: "Հարոլդ Ուիլսոն",
+    option2: "Դեյվիդ Լլոյդ Ջորջ",
+    option3: "Ջոն Մեյջոր",
+    option4: "Ջեյմս Կալագան",
+    trueOption: 4
   },
   {
     choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
-    trueOption: 1
-  },
-  {
-    choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
-    trueOption: 1
-  },
-  {
-    choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
-    trueOption: 1
-  },
-  {
-    choosed: false,
-    question: "Քանի ծովեր են ողողում Բալկանյան Թերակղզին:",
-    option1: "6",
-    option2: "3",
-    option3: "5",
-    option4: "4",
+    question: "Այս կետերի տեսակներից ով է պատկանում «ատամնավոր կետերի» կատեգորիային:",
+    option1: "Կաշալոտ ",
+    option2: "Փոքր գծավոր",
+    option3: "Մոխրագույն կետ",
+    option4: "Սապատավոր կետ",
     trueOption: 1
   },
   {
     choosed: false,
     question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
+      "Հետևյալ հայտնի շինարարություններից, ո՞ր մեկն է կառուցվել առաջինը:",
+    option1: "Թագավորական Ալբերտ Հոլլ",
+    option2: "Բիգ Բեն Ժամացույցի Աշտարակը",
+    option3: "Էյֆելյան աշտարակ",
+    option4: "Էմփայր սթեյթ բիլդինգ",
+    trueOption: 2
+  },
+  {
+    choosed: false,
+    question:
+      "Ինչպե՞ս է կոչվում այն թիվը, որին հաջորդում է 100 հատ զրո թվանշան:",
+    option1: "Մեգատրոն",
+    option2: "Գիգաբիթ",
+    option3: "Գուգոլ ",
+    option4: "Նանոմոլ",
     trueOption: 3
+  },
+  {
+    choosed: false,
+    question:
+      "Հետևյալներից ո՞ր գիտական մեծություն է անվանվել իտալական ազնվականի պատվին:",
+    option1: "Պասկալ",
+    option2: "Օմ",
+    option3: "Հերց",
+    option4: "Վոլտ ",
+    trueOption: 4
+  },
+  {
+    choosed: false,
+    question:
+      "Սկովիլի սանդղակը - դա սանդղակ է, որը գնահատում է ...",
+    option1: "Պղպեղի կծուությունը",
+    option2: "Մթնոլորտային օդի որակը",
+    option3: "Կանանց գրավչությունը",
+    option4: "Ծովի մակարդակը",
+    trueOption: 1
   },
   {
     choosed: false,
@@ -995,72 +1148,12 @@ let FinishQuestions = [
   {
     choosed: false,
     question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
-    trueOption: 3
-  },
-  {
-    choosed: false,
-    question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
-    trueOption: 3
-  },
-  {
-    choosed: false,
-    question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
-    trueOption: 3
-  },
-  {
-    choosed: false,
-    question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
-    trueOption: 3
-  },
-  {
-    choosed: false,
-    question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
-    trueOption: 3
-  },
-  {
-    choosed: false,
-    question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
-    trueOption: 3
-  },
-  {
-    choosed: false,
-    question:
-      "Եվրոպայի միայն երեք քազաքների գրադարաններում են պահպանվել մայաների քաղաքակրթության իսկական ձեռագրեր: Անվանեք ավելորդը.",
-    option1: "Փարիզ",
-    option2: "Դրեզդեն",
-    option3: "Հռոմ",
-    option4: "Մադրիդ",
-    trueOption: 3
+      "Նշվածներից ո՞րն է Գլխավոր Լիգայի Բեյսբոլի թիմ",
+    option1: "Նյու Յորք Նիքս",
+    option2: "Նյու Յորք Գիանտ",
+    option3: "Նյու Յորք Մետս",
+    option4: "Նյու Յորք Ռանջեր",
+    trueOption: 2
   }
 ];
 let VeryHardQuestions = [
@@ -1309,6 +1402,25 @@ let HardQuestions = [
     option3: "Իր կյանքով է",
     option4: "Մեռնելով է",
     trueOption: 4
+  },
+  {
+    choosed: false,
+    question:
+      "Հին Հայաստանում ինչպե՞ս են կոչվել պետության սահմաններում գտնվող մեծածավալ նահանգները",
+    option1: "Բդեշխություններ",
+    option2: "Քուստակներ",
+    option3: "Կալվածքներ",
+    option4: "Ստրատեգիաներ",
+    trueOption: 1
+  },
+  {
+    choosed: false,
+    question: "Ո՞րն է ամելատաք ծովը",
+    option1: "Դեղին",
+    option2: "Կարմիր",
+    option3: "Մեռյալ",
+    option4: "Սև",
+    trueOption: 2
   }
 ];
 let NrmalQuestions = [
@@ -1325,69 +1437,68 @@ let NrmalQuestions = [
     choosed: false,
     question: "Խնդիր-փոխուկ. արթրիտ + (ուրարտական քաղաք - ն) + 1/4 կայծ = ...",
     option1: "Ակնարկ",
-    option2: "Ոտնակ",
+    option2: "Հոդված",
     option3: "Հարված",
-    option4: "Հոդված",
-    trueOption: 4
+    option4: "Ոտնակ",
+    trueOption: 2
   },
   {
     choosed: false,
     question: "Խնդիր-փոխուկ. ժամ + անիվ = ...",
     option1: "Վայրկյանաչափ",
-    option2: "Զանգակ",
-    option3: "Ժամանց",
+    option2: "Ժամանց",
+    option3: "Զանգակ",
     option4: "Օրինակ",
-    trueOption: 2
+    trueOption: 3
   },
   {
     choosed: false,
     question: "Հնում ձեռագիր գրքերը պատկերազարդողներին անվանում էին ...",
     option1: "Նկարող",
-    option2: "Ծաղկող",
+    option2: "Հղկող",
     option3: "Բարգավաճող",
-    option4: "Հղկող",
-    trueOption: 2
+    option4: "Ծաղկող",
+    trueOption: 4
   },
   {
     choosed: false,
     question:
       "Անատոմիայի նշանաբանն է. Mortius vivos docent: Ովքե՞ր են սովորեցնում ողջերին:",
-    option1: "Հերոսները",
+    option1: "Մեռածները",
     option2: "Կենդանիները",
-    option3: "Մեռածները",
+    option3: "Հերոսները",
     option4: "Հիվանդները",
-    trueOption: 3
+    trueOption: 1
   },
   {
     choosed: false,
     question:
       "In vino veritas. ըստ հռոմիացիների հայտնի աֆորիզմի ինչի՞ է գինու մեջ.",
     option1: "Հաճույքը",
-    option2: "Կատարելիությունը",
+    option2: "Ճշմարտությունը",
     option3: "Կյանքի իմաստը",
-    option4: "Ճշմարտությունը",
-    trueOption: 4
+    option4: "Կատարելիությունը",
+    trueOption: 2
   },
 
   {
     choosed: false,
     question: "Ե՛վ քազաքի, և՛ նահանգի, և՛ երկրի ղեկավարի ազգանուն.",
-    option1: "Վաշինգտոն",
+    option1: "Քլիվլենդ",
     option2: "Լինկոլ",
-    option3: "Քլիվլենդ",
+    option3: "Վաշինգտոն",
     option4: "Բիսմարկ",
-    trueOption: 1
+    trueOption: 3
   },
   {
     choosed: false,
     question: "Ե՛վ «խնայողական», և՛ «հրադադարի», և՛ «բռնատիրական» ...",
     option1: "Հասարակարգ",
     option2: "Ավանդ",
-    option3: "Ռեժիմ",
-    option4: "Անցուդարձ",
-    trueOption: 3
+    option3: "Անցուդարձ",
+    option4: "Ռեժիմ",
+    trueOption: 4
   },
-
   {
     choosed: false,
     question:
@@ -1400,12 +1511,49 @@ let NrmalQuestions = [
   },
   {
     choosed: false,
+    question:
+      "Ինրպե՞ս է կոչվում Ռուսաստանի ազգային ժողովը",
+    option1: "Ռադա",
+    option2: "Դումա",
+    option3: "Սենատ",
+    option4: "Ժողով",
+    trueOption: 2
+  },
+  {
+    choosed: false,
     question: "3 հատ «2»-ով ստացվող ամենամեծ թիվը.",
     option1: "222",
     option2: "2*2*2",
     option3: "2-ի 22 աստիճան",
     option4: "22-ի քառակուսի",
     trueOption: 3
+  },
+  {
+    choosed: false,
+    question: "Նեֆրիտ կամ այլ կերպ ասած՝ ...",
+    option1: "Թոքաբորբ",
+    option2: "Լեզվաբորբ",
+    option3: "Աղիքաբորբ",
+    option4: "Երիկամաբորբ",
+    trueOption: 4
+  },
+  {
+    choosed: false,
+    question: "Երկրի մակերևույթի անհարթությունների ամբողջությունը կոչվում է",
+    option1: "Ռելիեֆ",
+    option2: "Փոս",
+    option3: "Հոր",
+    option4: "Պլատֆորմ",
+    trueOption: 1
+  },
+  {
+    choosed: false,
+    question: "Ո՞ր թագուհին է հիմնել Սանահինի և Հաղպատի վանքերը",
+    option1: "Թամար",
+    option2: "Խոսրովանուշ",
+    option3: "Փառանձեմ",
+    option4: "Կատրամինդե",
+    trueOption: 2
   }
 ];
 let EassyQuestions = [
@@ -1484,13 +1632,76 @@ let EassyQuestions = [
   },
   {
     choosed: false,
+    question: "Հայոց ո՞ր թագավորն է ստացել «երկաթ» մականունը",
+    option1: "Աշոտ",
+    option2: "Մխիթար",
+    option3: "Գուրգեն",
+    option4: "Թորգոմ",
+    trueOption: 1
+  },
+  {
+    choosed: false,
+    question: "Հին Հռոմում իրար դեմ մարտնչող մարդկանց անվանում էին",
+    option1: "Կալկուլիատոր",
+    option2: "Գլադիատոր",
+    option3: "Ռադիատոր",
+    option4: "Ալիգատոր",
+    trueOption: 2
+  },
+  {
+    choosed: false,
     question: "Հունական այբուբենի «փոքրիկ օ»-ն կոչվում է",
     option1: "Օգրեկ",
     option2: "Օճստիկ",
     option3: "Օմիկրոն",
     option4: "Օպստիկ",
     trueOption: 3
-  }
+  },
+  {
+    choosed: false,
+    question: "Ո՞ր մարզն է գտնվում Ապարան քաղաքը",
+    option1: "Կոտայքի",
+    option2: "Գեղարքունիքի",
+    option3: "Շիրակի",
+    option4: "Արագածոտնի",
+    trueOption: 4
+  },
+  {
+    choosed: false,
+    question: "Ի՞նչ էր «Մաուգլի»-ի ընկեր օձի անունը",
+    option1: "Կաա",
+    option2: "Բալու",
+    option3: "Չախկալ",
+    option4: "Բագիրա",
+    trueOption: 1
+  },
+  {
+    choosed: false,
+    question: "Ո՞վ է գլխավորում գողերին «Մաֆիա» խաղում",
+    option1: "Շերիֆը",
+    option2: "Վարողը",
+    option3: "Դոնը",
+    option4: "Օրենքը",
+    trueOption: 3
+  },
+  {
+    choosed: false,
+    question: "Windows համակարգում կան",
+    option1: "Դռներ",
+    option2: "Տանիքներ",
+    option3: "Առաստաղներ",
+    option4: "Պատուհաններ",
+    trueOption: 4
+  },
+  {
+    choosed: false,
+    question: "Ինտերնետային հայտնի դիտարկիչը կոչվում է Google...",
+    option1: "Atom",
+    option2: "Chrome",
+    option3: "Com",
+    option4: "Brome",
+    trueOption: 2
+  },
 ];
 let VeryEassyQuestions = [
   {
@@ -1507,10 +1718,10 @@ let VeryEassyQuestions = [
     choosed: false,
     question: "Ֆուտբոլի դաշտում խաղի ժամանակ ո՞վ սովորաբար չի լինում",
     option1: "Հարձակվող",
-    option2: "Կիսապաշտպան",
-    option3: "Իրավապաշտպան",
+    option2: "Իրավապաշտպան",
+    option3: "Կիսապաշտպան",
     option4: "Պաշտպան",
-    trueOption: 3
+    trueOption: 2
   },
   {
     choosed: false,
@@ -1533,11 +1744,11 @@ let VeryEassyQuestions = [
   {
     choosed: false,
     question: "Ինչպե՞ս է կոչբվում 90 աստիճանի անկյունը",
-    option1: "Թեք",
-    option2: "Ուղիղ",
-    option3: "Բոիթ",
+    option1: "Ուղիղ",
+    option2: "Թեք",
+    option3: "Բութ",
     option4: "Սուր",
-    trueOption: 2
+    trueOption: 1
   },
   {
     choosed: false,
@@ -1566,97 +1777,105 @@ let VeryEassyQuestions = [
     option3: "Օյին-զոյին",
     option4: "Օյին",
     trueOption: 4
+  },
+  {
+    choosed: false,
+    question:
+      "Տնային կենդանի չէ",
+    option1: "Վարազ",
+    option2: "Ձի",
+    option3: "Կով",
+    option4: "Աքաղաղ",
+    trueOption: 1
+  },
+  {
+    choosed: false,
+    question:
+      "Թվարկվածներից ո՞ր հեքիաթը չի գրել Թումանյանը",
+    option1: "Ձախորդ Փանոսը",
+    option2: "Մոխրոտիկը",
+    option3: "Կացին ախպերը",
+    option4: "Ալխելք մարդը",
+    trueOption: 2
+  },
+  {
+    choosed: false,
+    question:
+      "Գրենական պիտույք է",
+    option1: "ՙՄաղարիչ",
+    option2: "Չամիչ",
+    option3: "Սրիչ",
+    option4: "Սադրիչ",
+    trueOption: 3
+  },
+  {
+    choosed: false,
+    question:
+      "Քան՞ի միլիմետր է 1 մետրը",
+    option1: "100",
+    option2: "10",
+    option3: "0,1",
+    option4: "1000",
+    trueOption: 4
+  },
+  {
+    choosed: false,
+    question:
+      "Որտե՞ղ էր բնակվում Կարլսոնը",
+    option1: "Տանիքում",
+    option2: "Բաղնիքում",
+    option3: "Քարերի արանքում",
+    option4: "Սյունիքում",
+    trueOption: 1
+  },
+  {
+    choosed: false,
+    question:
+      "Ին՞չ է ածում հավը",
+    option1: "Կատու",
+    option2: "Ձու",
+    option3: "Մոլախոտ",
+    option4: "Բողկ",
+    trueOption: 2
+  },
+  {
+    choosed: false,
+    question:
+      "Թվարկվածներից ո՞ր մեկը նոտա չի",
+    option1: "Ռե",
+    option2: "Դո",
+    option3: "Կա",
+    option4: "Մի",
+    trueOption: 3
+  },
+  {
+    choosed: false,
+    question:
+      "Թվարկվածներից ո՞ր մեկը նոտա չի",
+    option1: "Ռե",
+    option2: "Դո",
+    option3: "Մի",
+    option4: "Կա",
+    trueOption: 4
+  },
+  {
+    choosed: false,
+    question:
+      "Ավտոմեքենայի մակնիշ է",
+    option1: "Նիվա",
+    option2: "Հավալա",
+    option3: "Հալալա",
+    option4: "Նիմա",
+    trueOption: 1
+  },
+  {
+    choosed: false,
+    question:
+      "Ժողովրդական ասացվածք. «Յոթը չափի, մեկը ...»",
+    option1: "Նայի",
+    option2: "Կտրի",
+    option3: "Վերցրու",
+    option4: "Խզարի",
+    trueOption: 2
   }
 ];
-
-
-
-
-
-
-
-
-let a = []
-
-function aaaa(money) {
-  if (MoneyIndex <= 4) {
-    money = '0'
-    a.push(money)
-  } else if (
-    MoneyIndex === 5 ||
-    MoneyIndex === 6 ||
-    MoneyIndex === 7 ||
-    MoneyIndex === 8 ||
-    MoneyIndex === 9
-  ) {
-    money = index4
-    a.push(money)
-  } else if (
-    MoneyIndex === 10 ||
-    MoneyIndex === 11 ||
-    MoneyIndex === 12 ||
-    MoneyIndex === 13 ||
-    MoneyIndex === 14
-  ) {
-    money = index9
-    a.push(money)
-  }
-  else if (
-    MoneyIndex === 15
-  ) {
-    money = index14
-    a.push(money)
-  }
-}
-
-
-let stats = [];
-let localStorageKey = "millionaire-result";
-seeResults()
-
-function finalResult() {
-  let statObject = {
-    localName: localStorage.getItem('name'),
-    localSurname: localStorage.getItem('surname'),
-    localMoney: a.money,
-    date: new Date()
-  };
-  console.log(statObject);
-  stats.push(statObject);
-  while (stats.length > 10) {
-    stats.shift();
-  }
-  let statsSting = JSON.stringify(stats);
-  localStorage.setItem(localStorageKey, statsSting);
-
-  addString(statObject);
-}
-
-function seeResults() {
-  let statsSting = localStorage.getItem(localStorageKey);
-  stats = JSON.parse(statsSting) || [];
-
-  for (let i = 0; i < stats.length; i++) {
-    let statObject = stats[i];
-    addString(statObject);
-  }
-}
-
-function addString(info) {
-  let statsTable = document.getElementById("quiz-stats");
-
-  let stringTr = statsTable.insertRow(1);
-
-  nameTd = stringTr.insertCell(0);
-  nameTd.innerText = info["localName"];
-
-  surnameTd = stringTr.insertCell(1);
-  surnameTd.innerText = info["localSurname"];
-
-  moneyTd = stringTr.insertCell(2);
-  moneyTd.innerText = info["localMoney"];
-
-  let day = new Date(info["date"]);
-  let dateTd = stringTr.insertCell(3);
-  dateTd.innerText = day.toDateString() + " " + day.getHours() + ":" + day.getMinutes();
-}

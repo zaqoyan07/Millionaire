@@ -66,6 +66,9 @@
           <button class="login-button" onclick="Page('AboutGame')">
             Խաղի Մասին
           </button>
+          <button class="login-button" onclick="Page('Best')">
+            Լավագույնները
+          </button>
           <button class="login-button" onclick="Page('Settings')">
             Կարգավորումներ
           </button>
@@ -189,11 +192,14 @@
         <!-- Take Modal -->
         <div id="TakeModal">
           <div class="main">
-            <p id="take-money">Դուք որոշել եք դաթարեցնե՞լ խաղը ու վերցնել գումարը</p>
+            <p id="take-money">
+              Դուք որոշել եք դաթարեցնե՞լ խաղը ու վերցնել գումարը
+            </p>
           </div>
           <div class="footer">
             <div class="yes" onclick="AnswerTakeModal('yes')">Այո</div>
             <div class="no" onclick="AnswerTakeModal('no')">Ոչ</div>
+            <p id="p" style="display: none">-</p>
           </div>
         </div>
         <!-- Help Call -->
@@ -317,7 +323,19 @@
           <div id="Mute" onclick="VolumeMute(),Music('mute')">
             <i class="fas fa-volume-mute"></i>
           </div>
-
+        </div>
+        <div class="footer">
+          <button class="login-button" onclick="Quit()">Գլխավոր Ցանկ</button>
+        </div>
+      </main>
+    </section>
+    <!-- Best -->
+    <section id="Best">
+      <main>
+        <div class="header">
+          <h3>Լավագույնները</h3>
+        </div>
+        <div class="main">
           <table id="quiz-stats">
             <tr>
               <th>Անուն</th>
@@ -347,10 +365,7 @@
                 height="100%"
               />
               <p class="author-name">Արժանիկ Զաքոյան</p>
-              <a
-                class="author-mail"
-                target="_blank"
-              >
+              <a class="author-mail" target="_blank">
                 <i class="far fa-envelope"></i>
                 <p>arjanik.zaqoyan.y@tumo.org</p>
               </a>
@@ -362,10 +377,7 @@
                 height="100%"
               />
               <p class="author-name">Կարեն Մուրադյան</p>
-              <a
-                class="author-mail"
-                target="_blank"
-              >
+              <a class="author-mail" target="_blank">
                 <i class="far fa-envelope"></i>
                 <p>karen.muradyan7.y@tumo.org</p>
               </a>

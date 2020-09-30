@@ -66,8 +66,8 @@
 
 html,
 body,
+#Best,
 #LogIn,
-#Menu,
 #NewGame,
 #AboutGame,
 #Settings,
@@ -75,6 +75,12 @@ body,
 	margin:0;
 	padding:0;
 	height: 100%;
+	width: 100%;
+	letter-spacing: 1px;
+}
+#Menu{
+	margin:0;
+	padding:0;
 	width: 100%;
 	letter-spacing: 1px;
 }
@@ -172,7 +178,7 @@ body,
 }
 .buttons{
 	width: 320px;
-	margin:20px auto;
+	margin:0px auto;
 }
 
 /*New Game*/
@@ -570,6 +576,48 @@ progress::-webkit-progress-value {
 	align-items: center;
 }
 #AboutGame > main .footer{
+	width: 100%;
+	height: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+/*Best*/
+
+#Best{
+	display: none;
+	background-image: url('../image/Cover/Cover.png');
+	background-size: cover;
+	background-position:center;
+}
+#Best > main{
+	width: 1000px;
+	height: 100%;
+	margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+#Best > main .header{
+	width: 100%;
+	height: 20%;
+	font-size: 30px;
+	color:#f1f1f1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#Best > main .main{
+	width: 100%;
+	height: 60%;
+	font-size: 20px;
+	padding: 0 100px;
+	text-align: center;
+	color:#f1f1f1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#Best > main .footer{
 	width: 100%;
 	height: 20%;
 	display: flex;
